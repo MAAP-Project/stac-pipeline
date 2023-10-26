@@ -1,0 +1,5 @@
+aws_lambda_powertools
+git+https://github.com/MAAP-Project/request_cognito_oauth_token.git
+requests
+pydantic
+pydantic-settings
