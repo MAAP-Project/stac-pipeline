@@ -79,6 +79,11 @@ class StacPipelineStack(Stack):
         # Configure the ingest lambda to poll messages from the queue
         ingest_lambda.add_event_source(SqsEventSource(queue))
         
+    
+        ingest_lambda.role.add_managed_policy(
+            ManagedPolicy.from_aws_managed_policy_name("AmazonS3FullAccess")
+        )
+        
 app = App()
 
 pipeline = StacPipelineStack(app, f"{deployment_settings.pipeline_id}-stack")
