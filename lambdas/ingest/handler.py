@@ -12,7 +12,7 @@ create_item_function = importlib.import_module(ingest_env.stac_module).create_it
 
 def ingest_item(item: Dict):
     print(f"ingesting {item}")
-    creds = get_creds(ingest_env.cognito_secret_id)
+    creds = get_creds(ingest_env.cognito_secret_arn)
     response = requests_post(
         url=ingest_env.post_url, data=json.dumps(item), headers={"Authorization": f"bearer {creds.access_token}"}
     )

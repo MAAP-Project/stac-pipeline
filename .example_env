@@ -3,5 +3,5 @@ INVENTORY_FILE_LOCATION='s3://test-bucket/test.csv'
 INVENTORY_FILE_KEY='test_column_name'
 DEPLOYMENT_STAC_PACKAGE='git+https://github.com/test-repo/MAAP-Project/tri_seasonal_s1_sar_composites.git'
 INGEST_STAC_MODULE='tri_seasonal_s1_sar_composites.stac'
-INGEST_COGNITO_SECRET_ID='test-secret
+INGEST_COGNITO_SECRET_ARN='test-secret
 INGEST_POST_URL='test-ingest-url'

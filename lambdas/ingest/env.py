@@ -7,6 +7,6 @@ class IngestEnv(BaseSettings):
     
     stac_module: str = Field(description="name of the function in the stac module to call to create a STAC item")
     
-    cognito_secret_id: str = Field(description="secret id for cognito user pool")
+    cognito_secret_arn: str = Field(description="arn of secret id for cognito user pool")
     
     post_url: str = Field(description="url for POST request to the ingestor")

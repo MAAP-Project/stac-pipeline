@@ -5,7 +5,7 @@ from aws_cdk import Duration
 from aws_cdk.aws_lambda_python_alpha import PythonFunction
 from aws_cdk.aws_lambda import Runtime
 from aws_cdk.aws_sqs import Queue 
-from aws_cdk.aws_iam import ManagedPolicy
+from aws_cdk.aws_iam import ManagedPolicy, PolicyStatement, Effect
 from aws_cdk.aws_lambda_event_sources import SqsEventSource
 from settings import DeploymentSettings
 from pathlib import Path
@@ -50,6 +50,13 @@ class StacPipelineStack(Stack):
         # Grant permission to send messages to the queue
         queue.grant_send_messages(inventory_lambda)
 
+        # policy for the ingest lambda to read the cognito secret
+        read_cognito_secret_policy = PolicyStatement(
+            effect=Effect.ALLOW,
+            actions=["secretsmanager:GetSecretValue"],
+            resources=[deployment_settings.ingest_env.cognito_secret_arn]
+        )
+
         ingest_env = capitalize_keys(deployment_settings.ingest_env.model_dump(), 'INGEST_')
 
         # add the user provided stac dependency to the file
@@ -83,6 +90,10 @@ class StacPipelineStack(Stack):
         ingest_lambda.role.add_managed_policy(
             ManagedPolicy.from_aws_managed_policy_name("AmazonS3FullAccess")
         )
+        
+        ingest_lambda.role.add_to_policy(read_cognito_secret_policy)
+        
+            
         
 app = App()
 
