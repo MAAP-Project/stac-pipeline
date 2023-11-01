@@ -10,3 +10,5 @@ class IngestEnv(BaseSettings):
     cognito_secret_arn: str = Field(description="arn of secret id for cognito user pool")
     
     post_url: str = Field(description="url for POST request to the ingestor")
+    
+    catalog_url: str = Field(description="url for the catalog to be updated with the new STAC item")

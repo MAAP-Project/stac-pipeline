@@ -27,6 +27,6 @@ def ingest_item(item: Dict):
 def handler(event: SQSEvent, context):
     print(f"processing event")
     for record in event.records:
-        stac_item = create_item_function(json.loads(record["body"])['task']).to_dict()
+        stac_item = create_item_function(json.loads(record["body"])['task'], ingest_env.catalog_url).to_dict()
         ingest_item(stac_item)
     print('done processing event')
