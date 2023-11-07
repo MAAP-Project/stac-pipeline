@@ -84,7 +84,7 @@ class StacPipelineStack(Stack):
         queue.grant_consume_messages(ingest_lambda)
 
         # Configure the ingest lambda to poll messages from the queue
-        ingest_lambda.add_event_source(SqsEventSource(queue))
+        ingest_lambda.add_event_source(SqsEventSource(queue, batch_size=1))
         
     
         ingest_lambda.role.add_managed_policy(

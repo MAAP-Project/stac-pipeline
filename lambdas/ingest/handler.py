@@ -27,6 +27,8 @@ def ingest_item(item: Dict):
 def handler(event: SQSEvent, context):
     print(f"processing event")
     for record in event.records:
-        stac_item = create_item_function(json.loads(record["body"])['task'], ingest_env.catalog_url).to_dict()
-        ingest_item(stac_item)
+        body = json.loads(record["body"])
+        for task in body:
+            stac_item = create_item_function(task, ingest_env.catalog_url).to_dict(transform_hrefs=False) # bool flag is critical, otherwise pystac makes requests to the catalog and we overwhelm it. 
+            ingest_item(stac_item)
     print('done processing event')
